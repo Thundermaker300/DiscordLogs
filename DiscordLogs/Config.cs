@@ -16,5 +16,7 @@ namespace DiscordLogs
         public bool OnReady = true;
         public bool OnDamage = true;
         public bool OnDeath = true;
+        public bool OnChat = true;
+        public bool OnAdminChat = true;
     }
 }

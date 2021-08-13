@@ -37,6 +37,7 @@ namespace DiscordLogs
             PlayerEvents.PlayerDeath += handler.OnDeath;
             PlayerEvents.PlayerJoin += handler.OnJoin;
             PlayerEvents.PlayerLeave += handler.OnLeave;
+            PlayerEvents.PlayerChat += handler.OnChat;
 
             // Pretty message
             base.OnEnabled();
@@ -55,6 +56,7 @@ namespace DiscordLogs
                 PlayerEvents.PlayerDeath -= handler.OnDeath;
                 PlayerEvents.PlayerJoin -= handler.OnJoin;
                 PlayerEvents.PlayerLeave -= handler.OnLeave;
+                PlayerEvents.PlayerChat -= handler.OnChat;
 
                 handler = null;
             }

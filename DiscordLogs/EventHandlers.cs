@@ -94,5 +94,12 @@ namespace DiscordLogs
             else
                 AddLog($"{UserDisplay(ev.Player)} was killed with AttackerId: {ev.AttackInfo.AttackerId}.");
         }
+
+        public void OnChat(PlayerChatEvent ev)
+        {
+            if (!ev.Finalized) return;
+            if ((!plugin.Config.OnChat && ev.IsAdminChat == false) || (!plugin.Config.OnAdminChat && ev.IsAdminChat == true)) return;
+            AddLog($"{(ev.IsAdminChat ? "{ADMIN} " : string.Empty)}[{UserDisplay(ev.Player)}] {ev.Message}");
+        }
     }
 }
