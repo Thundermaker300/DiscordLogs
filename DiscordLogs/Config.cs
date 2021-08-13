@@ -11,6 +11,7 @@ namespace DiscordLogs
     {
         public bool IsEnabled { get; set; } = true;
         public string WebhookUrl { get; set; } = string.Empty;
+        public string ChatWebhookUrl { get; set; } = string.Empty;
         public bool OnJoin { get; set; } = true;
         public bool OnLeave { get; set; } = true;
         public bool OnReady { get; set; } = true;

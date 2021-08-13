@@ -14,7 +14,7 @@ namespace DiscordLogs
     public class EventHandlers
     {
         MainPlugin plugin;
-        ConcurrentQueue<string> logs = new ConcurrentQueue<string>();
+        ConcurrentQueue<WebhookLog> logs = new ConcurrentQueue<WebhookLog>();
 
         public EventHandlers(MainPlugin plug)
         {
@@ -25,14 +25,15 @@ namespace DiscordLogs
         private string UserDisplay(Player ply) => $"{ply.PlayerName} ({ply.SteamID})";
 
 
-        private void AddLog(string log, bool isImportant = false)
+        private void AddLog(string log, bool isImportant = false, WebhookType web = WebhookType.Main)
         {
             string final = $"[{DateTime.UtcNow.ToString("HH:mm:ss")}] {log}";
 
             if (isImportant)
                 final = $"**{final}**";
 
-            logs.Enqueue(final);
+            WebhookLog obj = new WebhookLog { content = final, webhook = web };
+            logs.Enqueue(obj);
         }
 
         private async void MainLoop()
@@ -41,18 +42,49 @@ namespace DiscordLogs
             {
                 if (logs.Count > 0)
                 {
-                    StringBuilder bldr = new StringBuilder();
+                    StringBuilder bldrMain = new StringBuilder();
+                    StringBuilder bldrChat = new StringBuilder();
                     for (int i = 0; i < logs.Count; i++)
                     {
-                        if (logs.TryDequeue(out string res))
+                        if (logs.TryDequeue(out WebhookLog res))
                         {
-                            bldr.AppendLine(res);
+                            switch (res.webhook)
+                            {
+                                case WebhookType.Main:
+                                    bldrMain.AppendLine(res.content);
+                                    break;
+                                case WebhookType.Chat:
+                                    bldrChat.AppendLine(res.content);
+                                    break;
+                            }
                         }
                     }
-                    WebhookBody body = new WebhookBody { content = bldr.ToString() };
-                    HttpClient client = new HttpClient();
-                    StringContent content = new StringContent(JsonConvert.SerializeObject(body), Encoding.UTF8, "application/json");
-                    await client.PostAsync(plugin.Config.WebhookUrl, content);
+                    if (bldrMain.ToString().Length > 0)
+                    {
+                        using (HttpClient clientMain = new HttpClient())
+                        {
+                            WebhookBody bodyMain = new WebhookBody { content = bldrMain.ToString() };
+                            StringContent content = new StringContent(JsonConvert.SerializeObject(bodyMain), Encoding.UTF8, "application/json");
+                            HttpResponseMessage resp = await clientMain.PostAsync(plugin.Config.WebhookUrl, content);
+                            if (!resp.IsSuccessStatusCode)
+                            {
+                                Log.Error($"Failed to send to main webhook: {resp.ReasonPhrase}");
+                            }
+                        }
+                    }
+                    if (bldrChat.ToString().Length > 0)
+                    {
+                        using (HttpClient clientChat = new HttpClient())
+                        {
+                            WebhookBody bodyChat = new WebhookBody { content = bldrChat.ToString() };
+                            StringContent content = new StringContent(JsonConvert.SerializeObject(bodyChat), Encoding.UTF8, "application/json");
+                            HttpResponseMessage resp = await clientChat.PostAsync(plugin.Config.ChatWebhookUrl, content);
+                            if (!resp.IsSuccessStatusCode)
+                            {
+                                Log.Error($"Failed to send to chat webhook: {resp.ReasonPhrase}");
+                            }
+                        }
+                    }
                 }
                 await Task.Delay(5000);
             }
@@ -135,7 +167,7 @@ namespace DiscordLogs
         {
             if (!ev.Finalized) return;
             if ((!plugin.Config.OnChat && ev.IsAdminChat == false) || (!plugin.Config.OnAdminChat && ev.IsAdminChat == true)) return;
-            AddLog($"{(ev.IsAdminChat ? "{ADMIN} " : string.Empty)}[{UserDisplay(ev.Player)}] {ev.Message}");
+            AddLog($"{(ev.IsAdminChat ? "{ADMIN} " : string.Empty)}[{UserDisplay(ev.Player)}] {ev.Message}", false, WebhookType.Chat);
         }
     }
 }
