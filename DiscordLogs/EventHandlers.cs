@@ -14,7 +14,7 @@ namespace DiscordLogs
     public class EventHandlers
     {
         MainPlugin plugin;
-        ConcurrentQueue<string> logs = new ConcurrentQueue<string>(0);
+        ConcurrentQueue<string> logs = new ConcurrentQueue<string>();
 
         public EventHandlers(MainPlugin plug)
         {
@@ -116,9 +116,9 @@ namespace DiscordLogs
             if (!plugin.Config.OnDamage) return;
             if (!ev.Finalized) return;
             if (ev.AttackerId == "Player")
-                AddLog($"{UserDisplay(ev.Player)} has taken {(int)ev.Damage} damage from user {UserDisplay(Player.GetPlayer(ev.Attacker))}", true);
+                AddLog($"{UserDisplay(ev.Player)} has taken {ev.Damage.ToString("F")} damage from user {UserDisplay(Player.GetPlayer(ev.Attacker))}", true);
             else
-                AddLog($"{UserDisplay(ev.Player)} has taken {(int)ev.Damage} damage with AttackerId: {ev.AttackerId}.");
+                AddLog($"{UserDisplay(ev.Player)} has taken {ev.Damage.ToString("F")} damage with AttackerId: {ev.AttackerId}.");
         }
 
         public void OnDeath(PlayerDeathEvent ev)
