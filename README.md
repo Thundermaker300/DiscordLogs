@@ -10,4 +10,5 @@ SCP: Escape Together plugin that logs actions and sends them to a Discord server
 |------------|------------------------------------------|---------------|
 | IsEnabled  | Whether or not Discord Logs are enabled. | true          |
 | WebhookUrl | Determines the webhook to send logs to.  | string.Empty  |
+  
 Configuration not listed in the above table defines which logs that are sent. For example, "OnJoin" config determines whether or not join logs are sent.
