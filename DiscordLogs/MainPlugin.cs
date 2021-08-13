@@ -33,6 +33,7 @@ namespace DiscordLogs
             ServerEvents.Ready += handler.OnReady;
             ServerEvents.ActivateFemurBreaker += handler.OnActivateFemur;
             ServerEvents.CleanRoomTrigger += handler.OnCleanRoomTrigger;
+            ServerEvents.LockdownToggle += handler.OnLockdownToggle;
 
             // ! Player
             PlayerEvents.PlayerDamage += handler.OnDamage;
@@ -54,6 +55,7 @@ namespace DiscordLogs
                 ServerEvents.Ready -= handler.OnReady;
                 ServerEvents.ActivateFemurBreaker -= handler.OnActivateFemur;
                 ServerEvents.CleanRoomTrigger -= handler.OnCleanRoomTrigger;
+                ServerEvents.LockdownToggle -= handler.OnLockdownToggle;
 
                 // ! Player
                 PlayerEvents.PlayerDamage -= handler.OnDamage;

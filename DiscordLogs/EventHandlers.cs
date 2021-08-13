@@ -80,7 +80,21 @@ namespace DiscordLogs
             Player ply = Player.GetPlayer(ev.Target);
             if (ply != null)
             {
-                AddLog($"{UserDisplay(ply)} has triggered clean room {ev.CleanRoom.curCleanRoomCount}!");
+                AddLog($"{UserDisplay(ply)} has triggered clean room {ev.CleanRoom.curCleanRoomCount}.");
+            }
+        }
+
+        public void OnLockdownToggle(LockdownToggleEvent ev)
+        {
+            if (!plugin.Config.OnLockdownToggle) return;
+            if (!ev.Finalized) return;
+            if (ev.LockdownType == PluginAPI.Enums.LockdownType.LCZLockdown)
+            {
+                AddLog($"{UserDisplay(ev.Player)} has {(ev.Locked ? "enabled" : "disabled")} LCZ lockdown.");
+            }
+            else if (ev.LockdownType == PluginAPI.Enums.LockdownType.SCP008)
+            {
+                AddLog($"{UserDisplay(ev.Player)} has {(ev.Locked ? "opened" : "closed")} SCP-008.");
             }
         }
 

@@ -20,5 +20,6 @@ namespace DiscordLogs
         public bool OnAdminChat { get; set; } = true;
         public bool OnFemurBreaker { get; set; } = true;
         public bool OnCleanRoomTrigger { get; set; } = true;
+        public bool OnLockdownToggle { get; set; } = true;
     }
 }
