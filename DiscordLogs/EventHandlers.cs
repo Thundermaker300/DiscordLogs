@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
@@ -13,7 +14,7 @@ namespace DiscordLogs
     public class EventHandlers
     {
         MainPlugin plugin;
-        Queue<string> logs = new Queue<string>(0);
+        ConcurrentQueue<string> logs = new ConcurrentQueue<string>(0);
 
         public EventHandlers(MainPlugin plug)
         {
@@ -43,7 +44,10 @@ namespace DiscordLogs
                     StringBuilder bldr = new StringBuilder();
                     for (int i = 0; i < logs.Count; i++)
                     {
-                        bldr.AppendLine(logs.Dequeue());
+                        if (logs.TryDequeue(out string res))
+                        {
+                            bldr.AppendLine(res);
+                        }
                     }
                     WebhookBody body = new WebhookBody { content = bldr.ToString() };
                     HttpClient client = new HttpClient();
