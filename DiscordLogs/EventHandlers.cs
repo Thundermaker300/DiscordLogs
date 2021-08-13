@@ -115,20 +115,20 @@ namespace DiscordLogs
         {
             if (!plugin.Config.OnDamage) return;
             if (!ev.Finalized) return;
-            if (ev.AttackInfo.AttackerId == "Player")
+            if (ev.AttackerId == "Player")
                 AddLog($"{UserDisplay(ev.Player)} has taken {(int)ev.Damage} damage from user {UserDisplay(Player.GetPlayer(ev.Attacker))}", true);
             else
-                AddLog($"{UserDisplay(ev.Player)} has taken {(int)ev.Damage} damage with AttackerId: {ev.AttackInfo.AttackerId}.");
+                AddLog($"{UserDisplay(ev.Player)} has taken {(int)ev.Damage} damage with AttackerId: {ev.AttackerId}.");
         }
 
         public void OnDeath(PlayerDeathEvent ev)
         {
             if (!plugin.Config.OnDeath) return;
             if (!ev.Finalized) return;
-            if (ev.AttackInfo.AttackerId == "Player")
+            if (ev.AttackerId == "Player")
                 AddLog($"{UserDisplay(ev.Player)} was killed by {UserDisplay(Player.GetPlayer(ev.Attacker))}", true);
             else
-                AddLog($"{UserDisplay(ev.Player)} was killed with AttackerId: {ev.AttackInfo.AttackerId}.");
+                AddLog($"{UserDisplay(ev.Player)} was killed with AttackerId: {ev.AttackerId}.");
         }
 
         public void OnChat(PlayerChatEvent ev)
