@@ -62,6 +62,24 @@ namespace DiscordLogs
             AddLog($"Server is ready and waiting for players!");
         }
 
+        public void OnActivateFemur(ActivateFemurBreakerEvent ev)
+        {
+            if (!plugin.Config.OnFemurBreaker) return;
+            if (!ev.Finalized) return;
+            AddLog($"{UserDisplay(ev.Player)} has activated the femur breaker!");
+        }
+
+        public void OnCleanRoomTrigger(CleanRoomTriggerEvent ev)
+        {
+            if (!plugin.Config.OnCleanRoomTrigger) return;
+            if (!ev.Finalized) return;
+            Player ply = Player.GetPlayer(ev.Target);
+            if (ply != null)
+            {
+                AddLog($"{UserDisplay(ply)} has triggered clean room {ev.CleanRoom.curCleanRoomCount}!");
+            }
+        }
+
         // Player
         public void OnJoin(PlayerJoinEvent ev)
         {

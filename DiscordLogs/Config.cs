@@ -18,5 +18,7 @@ namespace DiscordLogs
         public bool OnDeath = true;
         public bool OnChat = true;
         public bool OnAdminChat = true;
+        public bool OnFemurBreaker = true;
+        public bool OnCleanRoomTrigger = true;
     }
 }

@@ -31,6 +31,8 @@ namespace DiscordLogs
 
             // ! Server
             ServerEvents.Ready += handler.OnReady;
+            ServerEvents.ActivateFemurBreaker += handler.OnActivateFemur;
+            ServerEvents.CleanRoomTrigger += handler.OnCleanRoomTrigger;
 
             // ! Player
             PlayerEvents.PlayerDamage += handler.OnDamage;
@@ -50,6 +52,8 @@ namespace DiscordLogs
                 // Unregister events
                 // ! Server
                 ServerEvents.Ready -= handler.OnReady;
+                ServerEvents.ActivateFemurBreaker -= handler.OnActivateFemur;
+                ServerEvents.CleanRoomTrigger -= handler.OnCleanRoomTrigger;
 
                 // ! Player
                 PlayerEvents.PlayerDamage -= handler.OnDamage;
