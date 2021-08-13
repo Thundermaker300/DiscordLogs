@@ -89,7 +89,7 @@ namespace DiscordLogs
 
         public void OnLeave(PlayerLeaveEvent ev)
         {
-            if (!plugin.Config.OnJoin) return;
+            if (!plugin.Config.OnLeave) return;
             AddLog($"{UserDisplay(ev.Player)} has left the server.", true);
         }
 
