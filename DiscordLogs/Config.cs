@@ -11,14 +11,14 @@ namespace DiscordLogs
     {
         public bool IsEnabled { get; set; } = true;
         public string WebhookUrl { get; set; } = string.Empty;
-        public bool OnJoin = true;
-        public bool OnLeave = true;
-        public bool OnReady = true;
-        public bool OnDamage = true;
-        public bool OnDeath = true;
-        public bool OnChat = true;
-        public bool OnAdminChat = true;
-        public bool OnFemurBreaker = true;
-        public bool OnCleanRoomTrigger = true;
+        public bool OnJoin { get; set; } = true;
+        public bool OnLeave { get; set; } = true;
+        public bool OnReady { get; set; } = true;
+        public bool OnDamage { get; set; } = true;
+        public bool OnDeath { get; set; } = true;
+        public bool OnChat { get; set; } = true;
+        public bool OnAdminChat { get; set; } = true;
+        public bool OnFemurBreaker { get; set; } = true;
+        public bool OnCleanRoomTrigger { get; set; } = true;
     }
 }
