@@ -44,6 +44,7 @@ namespace DiscordLogs
                 {
                     StringBuilder bldrMain = new StringBuilder();
                     StringBuilder bldrChat = new StringBuilder();
+                    StringBuilder bldrAdmin = new StringBuilder();
                     for (int i = 0; i < logs.Count; i++)
                     {
                         if (logs.TryDequeue(out WebhookLog res))
@@ -59,6 +60,11 @@ namespace DiscordLogs
                                     if (bldrChat.Length + res.content.Length >= 2000)
                                         continue;
                                     bldrChat.AppendLine(res.content);
+                                    break;
+                                case WebhookType.Admin:
+                                    if (bldrAdmin.Length + res.content.Length >= 2000)
+                                        continue;
+                                    bldrAdmin.AppendLine(res.content);
                                     break;
                             }
                         }
@@ -82,10 +88,23 @@ namespace DiscordLogs
                         {
                             WebhookBody bodyChat = new WebhookBody { content = bldrChat.ToString() };
                             StringContent content = new StringContent(JsonConvert.SerializeObject(bodyChat), Encoding.UTF8, "application/json");
-                            HttpResponseMessage resp = await clientChat.PostAsync(plugin.Config.ChatWebhookUrl, content);
+                            HttpResponseMessage resp = await clientChat.PostAsync(string.IsNullOrEmpty(plugin.Config.ChatWebhookUrl) ? plugin.Config.WebhookUrl : plugin.Config.ChatWebhookUrl, content);
                             if (!resp.IsSuccessStatusCode)
                             {
                                 Log.Error($"Failed to send to chat webhook: {resp.ReasonPhrase}");
+                            }
+                        }
+                    }
+                    if (bldrAdmin.ToString().Length > 0)
+                    {
+                        using (HttpClient clientAdmin = new HttpClient())
+                        {
+                            WebhookBody bodyAdmin = new WebhookBody { content = bldrAdmin.ToString() };
+                            StringContent content = new StringContent(JsonConvert.SerializeObject(bodyAdmin), Encoding.UTF8, "application/json");
+                            HttpResponseMessage resp = await clientAdmin.PostAsync(string.IsNullOrEmpty(plugin.Config.AdminWebhookUrl) ? plugin.Config.WebhookUrl : plugin.Config.AdminWebhookUrl, content);
+                            if (!resp.IsSuccessStatusCode)
+                            {
+                                Log.Error($"Failed to send to admin webhook: {resp.ReasonPhrase}");
                             }
                         }
                     }
@@ -187,6 +206,13 @@ namespace DiscordLogs
             if (!plugin.Config.OnEffect) return;
             if (!ev.Finalized) return;
             AddLog($"{UserDisplay(ev.Player)} has the {ev.Effect.id}");
+        }
+
+        public void OnAdminCommand(PlayerExecuteCommandEvent ev)
+        {
+            if (!plugin.Config.EnableAdminLogs) return;
+            if (!ev.Finalized) return;
+            AddLog($"{UserDisplay(ev.Player)} executed {ev.CommandType} `{ev.RawInput}`, success: `{ev.IsSuccessful}`, response: {ev.ResponseMessage}.");
         }
     }
 }

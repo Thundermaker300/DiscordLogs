@@ -43,6 +43,7 @@ namespace DiscordLogs
             PlayerEvents.PlayerLeave += handler.OnLeave;
             PlayerEvents.PlayerChat += handler.OnChat;
             PlayerEvents.PlayerEffect += handler.OnEffect;
+            PlayerEvents.PlayerExecuteCommand += handler.OnAdminCommand;
 
             // Pretty message
             base.OnEnabled();
@@ -67,6 +68,7 @@ namespace DiscordLogs
                 PlayerEvents.PlayerLeave -= handler.OnLeave;
                 PlayerEvents.PlayerChat -= handler.OnChat;
                 PlayerEvents.PlayerEffect -= handler.OnEffect;
+                PlayerEvents.PlayerExecuteCommand -= handler.OnAdminCommand;
 
                 handler = null;
             }

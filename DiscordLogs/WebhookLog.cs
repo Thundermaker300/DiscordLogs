@@ -10,6 +10,7 @@ namespace DiscordLogs
     {
         Main,
         Chat,
+        Admin,
     }
 
     public class WebhookLog
