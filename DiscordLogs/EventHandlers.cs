@@ -169,5 +169,12 @@ namespace DiscordLogs
             if ((!plugin.Config.OnChat && ev.IsAdminChat == false) || (!plugin.Config.OnAdminChat && ev.IsAdminChat == true)) return;
             AddLog($"{(ev.IsAdminChat ? "{ADMIN} " : string.Empty)}[{UserDisplay(ev.Player)}] `{ev.Message}`", false, WebhookType.Chat);
         }
+
+        public void OnEffect(PlayerEffectEvent ev)
+        {
+            if (!plugin.Config.OnEffect) return;
+            if (!ev.Finalized) return;
+            AddLog($"{UserDisplay(ev.Player)} has the {ev.Effect.id}");
+        }
     }
 }
