@@ -51,9 +51,13 @@ namespace DiscordLogs
                             switch (res.webhook)
                             {
                                 case WebhookType.Main:
+                                    if (bldrMain.Length + res.content.Length >= 2000)
+                                        continue;
                                     bldrMain.AppendLine(res.content);
                                     break;
                                 case WebhookType.Chat:
+                                    if (bldrChat.Length + res.content.Length >= 2000)
+                                        continue;
                                     bldrChat.AppendLine(res.content);
                                     break;
                             }
