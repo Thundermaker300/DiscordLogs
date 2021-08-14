@@ -130,6 +130,14 @@ namespace DiscordLogs
             }
         }
 
+        public void OnTeslaTriger(TeslaTriggerEvent ev)
+        {
+            if (!plugin.Config.OnTeslaTrigger) return;
+            if (!ev.Finalized) return;
+            Player ply = Player.GetPlayer(ev.Target);
+            AddLog($"{UserDisplay(ply)} has triggered a {(ev.TeslaGate)}");
+        }
+
         // Player
         public void OnJoin(PlayerJoinEvent ev)
         {
