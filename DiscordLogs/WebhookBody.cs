@@ -8,6 +8,7 @@ namespace DiscordLogs
 {
     internal class WebhookBody
     {
+        public string username;
         public string content;
     }
 }

@@ -13,7 +13,7 @@ namespace DiscordLogs
     {
         public override string Name => "DiscordLogs";
         public override string Author => "Thunder";
-        public override Version Version => new Version(0, 0, 2);
+        public override Version Version => new Version(0, 1, 0);
         public override PluginPriority Priority => PluginPriority.High;
 
         EventHandlers handler;

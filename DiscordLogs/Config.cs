@@ -14,13 +14,13 @@ namespace DiscordLogs
         public string ChatWebhookUrl { get; set; } = string.Empty;
         public string AdminWebhookUrl { get; set; } = string.Empty;
         public bool EnableAdminLogs { get; set; } = true;
+        public bool EnableChatLogs { get; set; } = true;
+        public bool LogAdminChat { get; set; } = true;
         public bool OnJoin { get; set; } = true;
         public bool OnLeave { get; set; } = true;
         public bool OnReady { get; set; } = true;
         public bool OnDamage { get; set; } = true;
         public bool OnDeath { get; set; } = true;
-        public bool OnChat { get; set; } = true;
-        public bool OnAdminChat { get; set; } = true;
         public bool OnFemurBreaker { get; set; } = true;
         public bool OnCleanRoomTrigger { get; set; } = true;
         public bool OnLockdownToggle { get; set; } = true;

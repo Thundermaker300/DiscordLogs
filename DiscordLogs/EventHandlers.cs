@@ -73,7 +73,7 @@ namespace DiscordLogs
                     {
                         using (HttpClient clientMain = new HttpClient())
                         {
-                            WebhookBody bodyMain = new WebhookBody { content = bldrMain.ToString() };
+                            WebhookBody bodyMain = new WebhookBody { username = "EventLog", content = bldrMain.ToString() };
                             StringContent content = new StringContent(JsonConvert.SerializeObject(bodyMain), Encoding.UTF8, "application/json");
                             HttpResponseMessage resp = await clientMain.PostAsync(plugin.Config.WebhookUrl, content);
                             if (!resp.IsSuccessStatusCode)
@@ -86,7 +86,7 @@ namespace DiscordLogs
                     {
                         using (HttpClient clientChat = new HttpClient())
                         {
-                            WebhookBody bodyChat = new WebhookBody { content = bldrChat.ToString() };
+                            WebhookBody bodyChat = new WebhookBody { username = "ChatLog", content = bldrChat.ToString() };
                             StringContent content = new StringContent(JsonConvert.SerializeObject(bodyChat), Encoding.UTF8, "application/json");
                             HttpResponseMessage resp = await clientChat.PostAsync(string.IsNullOrEmpty(plugin.Config.ChatWebhookUrl) ? plugin.Config.WebhookUrl : plugin.Config.ChatWebhookUrl, content);
                             if (!resp.IsSuccessStatusCode)
@@ -99,7 +99,7 @@ namespace DiscordLogs
                     {
                         using (HttpClient clientAdmin = new HttpClient())
                         {
-                            WebhookBody bodyAdmin = new WebhookBody { content = bldrAdmin.ToString() };
+                            WebhookBody bodyAdmin = new WebhookBody { username = "AdminLog", content = bldrAdmin.ToString() };
                             StringContent content = new StringContent(JsonConvert.SerializeObject(bodyAdmin), Encoding.UTF8, "application/json");
                             HttpResponseMessage resp = await clientAdmin.PostAsync(string.IsNullOrEmpty(plugin.Config.AdminWebhookUrl) ? plugin.Config.WebhookUrl : plugin.Config.AdminWebhookUrl, content);
                             if (!resp.IsSuccessStatusCode)
@@ -197,7 +197,7 @@ namespace DiscordLogs
         public void OnChat(PlayerChatEvent ev)
         {
             if (!ev.Finalized) return;
-            if ((!plugin.Config.OnChat && ev.IsAdminChat == false) || (!plugin.Config.OnAdminChat && ev.IsAdminChat == true)) return;
+            if ((!plugin.Config.EnableChatLogs && ev.IsAdminChat == false) || (!plugin.Config.LogAdminChat && ev.IsAdminChat == true)) return;
             AddLog($"{(ev.IsAdminChat ? "{ADMIN} " : string.Empty)}[{UserDisplay(ev.Player)}] `{ev.Message}`", false, WebhookType.Chat);
         }
 
