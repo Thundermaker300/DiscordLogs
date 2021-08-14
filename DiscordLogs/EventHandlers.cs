@@ -139,7 +139,7 @@ namespace DiscordLogs
             if (!plugin.Config.OnTeslaTrigger) return;
             if (!ev.Finalized) return;
             Player ply = Player.GetPlayer(ev.Target);
-            AddLog($"{UserDisplay(ply)} has triggered a {(ev.TeslaGate)}");
+            AddLog($"{UserDisplay(ply)} has triggered a tesla gate.");
         }
 
         // Player
