@@ -143,13 +143,14 @@ namespace DiscordLogs
         {
             if (!plugin.Config.OnLockdownToggle) return;
             if (!ev.Finalized) return;
+            string emote = (ev.Locked ? "🔒" : "🔓");
             if (ev.LockdownType == PluginAPI.Enums.LockdownType.LCZLockdown)
             {
-                AddLog($"{UserDisplay(ev.Player)} has {(ev.Locked ? "enabled" : "disabled")} LCZ lockdown.");
+                AddLog($"{emote} {UserDisplay(ev.Player)} has {(ev.Locked ? "enabled" : "disabled")} LCZ lockdown.");
             }
             else if (ev.LockdownType == PluginAPI.Enums.LockdownType.SCP008)
             {
-                AddLog($"🔒 {UserDisplay(ev.Player)} has {(ev.Locked ? "opened" : "closed")} SCP-008.");
+                AddLog($"{emote} {UserDisplay(ev.Player)} has {(ev.Locked ? "opened" : "closed")} SCP-008.");
             }
         }
 
