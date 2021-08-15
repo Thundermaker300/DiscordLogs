@@ -35,6 +35,8 @@ namespace DiscordLogs
             ServerEvents.CleanRoomTrigger += handler.OnCleanRoomTrigger;
             ServerEvents.LockdownToggle += handler.OnLockdownToggle;
             ServerEvents.TeslaTrigger += handler.OnTeslaTriger;
+            ServerEvents.CleanRoomToggle += handler.OnCleanRoomToggle;
+            
 
             // ! Player
             PlayerEvents.PlayerDamage += handler.OnDamage;
@@ -45,6 +47,10 @@ namespace DiscordLogs
             PlayerEvents.PlayerEffect += handler.OnEffect;
             PlayerEvents.PlayerExecuteCommand += handler.OnAdminCommand;
             PlayerEvents.PlayerClassChange += handler.OnClassChage;
+
+            // ! SCP
+            ScpEvents.Scp049AddTarget += handler.On049AddTarget;
+            ScpEvents.Scp049Cure += handler.On049Cure;
 
             // Pretty message
             base.OnEnabled();
@@ -60,7 +66,8 @@ namespace DiscordLogs
                 ServerEvents.ActivateFemurBreaker -= handler.OnActivateFemur;
                 ServerEvents.CleanRoomTrigger -= handler.OnCleanRoomTrigger;
                 ServerEvents.LockdownToggle -= handler.OnLockdownToggle;
-                ServerEvents.TeslaTrigger += handler.OnTeslaTriger;
+                ServerEvents.TeslaTrigger -= handler.OnTeslaTriger;
+                ServerEvents.CleanRoomToggle -= handler.OnCleanRoomToggle;
 
                 // ! Player
                 PlayerEvents.PlayerDamage -= handler.OnDamage;
@@ -71,6 +78,10 @@ namespace DiscordLogs
                 PlayerEvents.PlayerEffect -= handler.OnEffect;
                 PlayerEvents.PlayerExecuteCommand -= handler.OnAdminCommand;
                 PlayerEvents.PlayerClassChange -= handler.OnClassChage;
+
+                // ! SCP
+                ScpEvents.Scp049AddTarget -= handler.On049AddTarget;
+                ScpEvents.Scp049Cure -= handler.On049Cure;
 
                 handler = null;
             }

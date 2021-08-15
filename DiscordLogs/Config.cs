@@ -27,5 +27,8 @@ namespace DiscordLogs
         public bool OnEffect { get; set; } = true;
         public bool OnTeslaTrigger { get; set; } = true;
         public bool OnClassChange { get; set; } = true;
+        public bool OnCleanRoomToggle { get; set; } = true;
+        public bool On049AddTarget { get; set; } = false;
+        public bool On049Cure { get; set; } = false;
     }
 }
