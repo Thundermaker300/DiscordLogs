@@ -118,14 +118,14 @@ namespace DiscordLogs
         public void OnReady()
         {
             if (!plugin.Config.OnReady) return;
-            AddLog($"Server is ready and waiting for players!");
+            AddLog($"✅ Server is ready and waiting for players!");
         }
 
         public void OnActivateFemur(ActivateFemurBreakerEvent ev)
         {
             if (!plugin.Config.OnFemurBreaker) return;
             if (!ev.Finalized) return;
-            AddLog($"{UserDisplay(ev.Player)} has activated the femur breaker!");
+            AddLog($"🦴 {UserDisplay(ev.Player)} has activated the femur breaker!");
         }
 
         public void OnCleanRoomTrigger(CleanRoomTriggerEvent ev)
@@ -135,7 +135,7 @@ namespace DiscordLogs
             Player ply = Player.GetPlayer(ev.Target);
             if (ply != null)
             {
-                AddLog($"{UserDisplay(ply)} has triggered clean room {ev.CleanRoom.curCleanRoomCount}.");
+                AddLog($"⛆ {UserDisplay(ply)} has triggered clean room {ev.CleanRoom.curCleanRoomCount}.");
             }
         }
 
@@ -149,7 +149,7 @@ namespace DiscordLogs
             }
             else if (ev.LockdownType == PluginAPI.Enums.LockdownType.SCP008)
             {
-                AddLog($"{UserDisplay(ev.Player)} has {(ev.Locked ? "opened" : "closed")} SCP-008.");
+                AddLog($"🔒 {UserDisplay(ev.Player)} has {(ev.Locked ? "opened" : "closed")} SCP-008.");
             }
         }
 
@@ -158,20 +158,20 @@ namespace DiscordLogs
             if (!plugin.Config.OnTeslaTrigger) return;
             if (!ev.Finalized) return;
             Player ply = Player.GetPlayer(ev.Target);
-            AddLog($"{UserDisplay(ply)} has triggered a tesla gate.");
+            AddLog($"⚡ {UserDisplay(ply)} has triggered a tesla gate.");
         }
 
         // Player
         public void OnJoin(PlayerJoinEvent ev)
         {
             if (!plugin.Config.OnJoin) return;
-            AddLog($"{UserDisplay(ev.Player)} has joined the server.", true);
+            AddLog($"➡️ {UserDisplay(ev.Player)} has joined the server.", true);
         }
 
         public void OnLeave(PlayerLeaveEvent ev)
         {
             if (!plugin.Config.OnLeave) return;
-            AddLog($"{UserDisplay(ev.Player)} has left the server.", true);
+            AddLog($"⬅️ {UserDisplay(ev.Player)} has left the server.", true);
         }
 
         public void OnDamage(PlayerDamageEvent ev)
@@ -179,9 +179,9 @@ namespace DiscordLogs
             if (!plugin.Config.OnDamage) return;
             if (!ev.Finalized) return;
             if (ev.AttackerId == "Player")
-                AddLog($"{UserDisplay(ev.Player)} has taken {ev.Damage.ToString("F")} damage from user {UserDisplay(Player.GetPlayer(ev.Attacker))}", true);
+                AddLog($"🩸 {UserDisplay(ev.Player)} has taken {ev.Damage.ToString("F")} damage from user {UserDisplay(Player.GetPlayer(ev.Attacker))}", true);
             else
-                AddLog($"{UserDisplay(ev.Player)} has taken {ev.Damage.ToString("F")} damage with AttackerId: {ev.AttackerId}.");
+                AddLog($"🩸 {UserDisplay(ev.Player)} has taken {ev.Damage.ToString("F")} damage with AttackerId: {ev.AttackerId}.");
         }
 
         public void OnDeath(PlayerDeathEvent ev)
@@ -189,16 +189,16 @@ namespace DiscordLogs
             if (!plugin.Config.OnDeath) return;
             if (!ev.Finalized) return;
             if (ev.AttackerId == "Player")
-                AddLog($"{UserDisplay(ev.Player)} was killed by {UserDisplay(Player.GetPlayer(ev.Attacker))}", true);
+                AddLog($"☠️ {UserDisplay(ev.Player)} was killed by {UserDisplay(Player.GetPlayer(ev.Attacker))}", true);
             else
-                AddLog($"{UserDisplay(ev.Player)} was killed with AttackerId: {ev.AttackerId}.");
+                AddLog($"☠️ {UserDisplay(ev.Player)} was killed with AttackerId: {ev.AttackerId}.");
         }
 
         public void OnChat(PlayerChatEvent ev)
         {
             if (!ev.Finalized) return;
             if ((!plugin.Config.EnableChatLogs && ev.IsAdminChat == false) || (!plugin.Config.LogAdminChat && ev.IsAdminChat == true)) return;
-            AddLog($"{(ev.IsAdminChat ? "{ADMIN} " : string.Empty)}[{UserDisplay(ev.Player)}] `{ev.Message}`", false, WebhookType.Chat);
+            AddLog($"💬 {(ev.IsAdminChat ? "{ADMIN} " : string.Empty)}[{UserDisplay(ev.Player)}] `{ev.Message}`", false, WebhookType.Chat);
         }
 
         public void OnEffect(PlayerEffectEvent ev)
@@ -212,7 +212,7 @@ namespace DiscordLogs
         {
             if (!plugin.Config.EnableAdminLogs) return;
             if (!ev.Finalized) return;
-            AddLog($"{UserDisplay(ev.Player)} executed {ev.CommandType} `{ev.RawInput}`, success: `{ev.IsSuccessful}`, response: {ev.ResponseMessage}.");
+            AddLog($"💬 {UserDisplay(ev.Player)} executed {ev.CommandType} `{ev.RawInput}`, success: `{ev.IsSuccessful}`, response: {ev.ResponseMessage}.");
         }
     }
 }
