@@ -215,5 +215,15 @@ namespace DiscordLogs
             if (!ev.Finalized) return;
             AddLog($"💬 {UserDisplay(ev.Player)} executed {ev.CommandType} `{ev.RawInput}`, success: `{ev.IsSuccessful}`, response: {ev.ResponseMessage}.");
         }
+
+        public void OnClassChage(PlayerClassChangeEvent ev)
+        {
+            if (!plugin.Config.OnCleanRoomTrigger) return;
+            if (!ev.Finalized) return;
+            if (ev.NewClassID == 0)
+                AddLog($"{UserDisplay(ev.Player)} has been changed to Spectator");
+            else
+                AddLog($"{UserDisplay(ev.Player)} has been changed to Class-D");
+        }
     }
 }

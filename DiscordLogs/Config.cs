@@ -26,5 +26,6 @@ namespace DiscordLogs
         public bool OnLockdownToggle { get; set; } = true;
         public bool OnEffect { get; set; } = true;
         public bool OnTeslaTrigger { get; set; } = true;
+        public bool OnClassChange { get; set; } = true;
     }
 }

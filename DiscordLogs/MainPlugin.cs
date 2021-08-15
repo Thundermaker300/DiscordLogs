@@ -44,6 +44,7 @@ namespace DiscordLogs
             PlayerEvents.PlayerChat += handler.OnChat;
             PlayerEvents.PlayerEffect += handler.OnEffect;
             PlayerEvents.PlayerExecuteCommand += handler.OnAdminCommand;
+            PlayerEvents.PlayerClassChange += handler.OnClassChage;
 
             // Pretty message
             base.OnEnabled();
@@ -69,6 +70,7 @@ namespace DiscordLogs
                 PlayerEvents.PlayerChat -= handler.OnChat;
                 PlayerEvents.PlayerEffect -= handler.OnEffect;
                 PlayerEvents.PlayerExecuteCommand -= handler.OnAdminCommand;
+                PlayerEvents.PlayerClassChange -= handler.OnClassChage;
 
                 handler = null;
             }
