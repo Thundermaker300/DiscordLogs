@@ -159,9 +159,9 @@ namespace DiscordLogs
             if (!plugin.Config.OnCleanRoomTrigger) return;
             if (!ev.Finalized) return;
             if (ev.IsDisabling == true)
-                AddLog($"{UserDisplay(ev.Player)} has disabled Clean Room #{ev.CleanRoom.curCleanRoomId}");
+                AddLog($"🚨 {UserDisplay(ev.Player)} has disabled Clean Room #{ev.CleanRoom.curCleanRoomId}");
             else
-                AddLog($"{UserDisplay(ev.Player)} has enabled Clean Room #{ev.CleanRoom.curCleanRoomId}"); 
+                AddLog($"🚨 {UserDisplay(ev.Player)} has enabled Clean Room #{ev.CleanRoom.curCleanRoomId}"); 
         }
 
 
@@ -253,7 +253,6 @@ namespace DiscordLogs
             Player ply = Player.GetPlayer(ev.Target);
             if (ply != null)
                 AddLog($"🏃‍ {UserDisplay(ply)} is now a target of SCP-049.");
-                
         }
     }
 }
