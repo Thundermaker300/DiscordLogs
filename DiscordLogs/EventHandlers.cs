@@ -135,7 +135,7 @@ namespace DiscordLogs
             Player ply = Player.GetPlayer(ev.Entity);
             if (ply != null)
             {
-                AddLog($"⛆ {UserDisplay(ply)} has triggered clean room {ev.CleanRoom.curCleanRoomCount}.");
+                AddLog($"⛆ {UserDisplay(ply)} has triggered Clean Room #{ev.CleanRoom.curCleanRoomId}.");
             }
         }
 
@@ -156,12 +156,12 @@ namespace DiscordLogs
 
         public void OnCleanRoomToggle(CleanRoomToggleEvent ev)
         {
-            if (!plugin.Config.OnCleanRoomTrigger) ;
+            if (!plugin.Config.OnCleanRoomTrigger) return;
             if (!ev.Finalized) return;
             if (ev.IsDisabling == true)
-                AddLog($"{UserDisplay(ev.Player)} has disabled the {ev.CleanRoom.curCleanRoomCount}");
+                AddLog($"{UserDisplay(ev.Player)} has disabled Clean Room #{ev.CleanRoom.curCleanRoomId}");
             else
-                AddLog($"{UserDisplay(ev.Player)} has enabled the {ev.CleanRoom.curCleanRoomCount}"); 
+                AddLog($"{UserDisplay(ev.Player)} has enabled Clean Room #{ev.CleanRoom.curCleanRoomId}"); 
         }
 
 
@@ -170,7 +170,8 @@ namespace DiscordLogs
             if (!plugin.Config.OnTeslaTrigger) return;
             if (!ev.Finalized) return;
             Player ply = Player.GetPlayer(ev.Entity);
-            AddLog($"⚡ {UserDisplay(ply)} has triggered a tesla gate.");
+            if (ply != null)
+                AddLog($"⚡ {UserDisplay(ply)} has triggered a tesla gate.");
         }
 
         // Player
@@ -250,7 +251,8 @@ namespace DiscordLogs
             if (!plugin.Config.On049AddTarget) return;
             if (!ev.Finalized) return;
             Player ply = Player.GetPlayer(ev.Target);
-            AddLog($"🏃‍ {UserDisplay(ply)} is now SCP-049's new target");
+            if (ply != null)
+                AddLog($"🏃‍ {UserDisplay(ply)} is now a target of SCP-049.");
                 
         }
     }
