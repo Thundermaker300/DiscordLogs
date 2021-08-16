@@ -225,7 +225,7 @@ namespace DiscordLogs
         {
             if (!plugin.Config.EnableAdminLogs) return;
             if (!ev.Finalized) return;
-            AddLog($"💬 {UserDisplay(ev.Player)} executed {ev.CommandType} `{ev.RawInput}`, success: `{ev.IsSuccessful}`, response: {ev.ResponseMessage}.");
+            AddLog($"💬 {UserDisplay(ev.Player)} executed {ev.CommandType} `{ev.RawInput}`, success: `{ev.IsSuccessful}`, response: {ev.ResponseMessage}.", false, WebhookType.Admin);
         }
 
         public void OnClassChage(PlayerClassChangeEvent ev)

@@ -3,7 +3,7 @@ SCP: Escape Together plugin that logs actions and sends them to a Discord server
 
 ## Requirements
 * Current Version: V0.1.0
-* Requires SCP:ET V0.2.0-alpha to function
+* Requires SCP:ET V0.2.0-alpha (MUST be on public beta)
 
 ## Config
 | Config          | Description                                                                                               | Default Value |
