@@ -164,6 +164,20 @@ namespace DiscordLogs
                 AddLog($"🚨 {UserDisplay(ev.Player)} has enabled Clean Room #{ev.CleanRoom.curCleanRoomId}"); 
         }
 
+        public void OnDoorInteract(InteractDoorEvent ev)
+        {
+            if (!plugin.Config.OnDoorInteract) return;
+            if (!ev.Finalized) return;
+            if (ev.IsNPCOrPlayer)
+            {
+                if (ev.InteractionType == VirtualBrightPlayz.SCP_ET.DoorInteractType.Player && ev.Entity != null)
+                {
+                    var ply = Player.GetPlayer(ev.Entity);
+                    AddLog($"🚪 {UserDisplay(ply)} has {(ev.IsClose ? "closed" : "opened")} a door. Name: {ev.DoorName} | DoorType: {ev.DoorType}");
+                }
+            }
+        }
+
 
         public void OnTeslaTriger(TeslaTriggerEvent ev)
         {

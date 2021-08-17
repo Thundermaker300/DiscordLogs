@@ -36,6 +36,7 @@ namespace DiscordLogs
             ServerEvents.LockdownToggle += handler.OnLockdownToggle;
             ServerEvents.TeslaTrigger += handler.OnTeslaTriger;
             ServerEvents.CleanRoomToggle += handler.OnCleanRoomToggle;
+            ServerEvents.DoorInteract += handler.OnDoorInteract;
             
 
             // ! Player
@@ -68,6 +69,7 @@ namespace DiscordLogs
                 ServerEvents.LockdownToggle -= handler.OnLockdownToggle;
                 ServerEvents.TeslaTrigger -= handler.OnTeslaTriger;
                 ServerEvents.CleanRoomToggle -= handler.OnCleanRoomToggle;
+                ServerEvents.DoorInteract -= handler.OnDoorInteract;
 
                 // ! Player
                 PlayerEvents.PlayerDamage -= handler.OnDamage;
