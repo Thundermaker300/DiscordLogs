@@ -252,6 +252,8 @@ namespace DiscordLogs
                 AddLog($"🧍 {UserDisplay(ev.Player)} has been changed to Class-D");
         }
 
+
+
         // SCP
         public void On049Cure(Scp049CureEvent ev)
         {
@@ -267,6 +269,23 @@ namespace DiscordLogs
             Player ply = Player.GetPlayer(ev.Target);
             if (ply != null)
                 AddLog($"🏃‍ {UserDisplay(ply)} is now a target of SCP-049.");
+        }
+
+        public void On294Input(Scp294InputEvent ev)
+        {
+            if (!plugin.Config.On294Input) return;
+            if (!ev.Finalized) return;
+            if (!ev.IsCustomDrink == true)
+                AddLog($"🥤 {UserDisplay(ev.Player)} has requested a drink `{ev.Input}`. Is it valid {ev.IsValidDrink}");
+            else
+                AddLog($"🥤 {UserDisplay(ev.Player)} has requested a custom drink with the name of `{ev.Input}`");
+        }
+
+        public void On914Activate(Scp914ActivateEvent ev)
+        {
+            if (!plugin.Config.On914Activate) return;
+            if (!ev.Finalized) return;
+            AddLog($"⚙️ {UserDisplay(ev.Player)} has activated SCP-914 on setting {ev.SCP914.NetworkcurMode}");
         }
     }
 }

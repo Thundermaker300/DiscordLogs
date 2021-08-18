@@ -28,6 +28,8 @@ namespace DiscordLogs
         public bool OnTeslaTrigger { get; set; } = true;
         public bool OnClassChange { get; set; } = true;
         public bool OnCleanRoomToggle { get; set; } = true;
+        public bool On294Input { get; set; } = true;
+        public bool On914Activate { get; set; } = true;
         public bool OnDoorInteract { get; set; } = false;
         public bool On049AddTarget { get; set; } = false;
         public bool On049Cure { get; set; } = false;

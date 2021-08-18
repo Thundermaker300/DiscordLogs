@@ -53,6 +53,8 @@ namespace DiscordLogs
             // ! SCP
             ScpEvents.Scp049AddTarget += handler.On049AddTarget;
             ScpEvents.Scp049Cure += handler.On049Cure;
+            ScpEvents.Scp294Input += handler.On294Input;
+            ScpEvents.Scp914Activate += handler.On914Activate;
 
             // Pretty message
             base.OnEnabled();
@@ -85,6 +87,9 @@ namespace DiscordLogs
                 // ! SCP
                 ScpEvents.Scp049AddTarget -= handler.On049AddTarget;
                 ScpEvents.Scp049Cure -= handler.On049Cure;
+                ScpEvents.Scp294Input -= handler.On294Input;
+                ScpEvents.Scp914Activate -= handler.On914Activate;
+
 
                 handler = null;
             }
