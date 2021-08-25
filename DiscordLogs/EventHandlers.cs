@@ -22,7 +22,7 @@ namespace DiscordLogs
             Task.Factory.StartNew(MainLoop);
         }
 
-        private string UserDisplay(Player ply) => $"{ply.PlayerName} ({ply.SteamID})";
+        private string UserDisplay(Player ply) => $"{ply.PlayerName} ({ply.SteamId})";
 
 
         private void AddLog(string log, bool isImportant = false, WebhookType web = WebhookType.Main)
@@ -170,7 +170,7 @@ namespace DiscordLogs
             if (!ev.Finalized) return;
             if (ev.IsNPCOrPlayer)
             {
-                if (ev.InteractionType == VirtualBrightPlayz.SCP_ET.DoorInteractType.Player && ev.Entity != null)
+                if (ev.InteractionType == SCP_ET.DoorInteractType.Player && ev.Entity != null)
                 {
                     var ply = Player.GetPlayer(ev.Entity);
                     AddLog($"🚪 {UserDisplay(ply)} has {(ev.IsClose ? "closed" : "opened")} a door. Name: {ev.DoorName} | DoorType: {ev.DoorType}");
