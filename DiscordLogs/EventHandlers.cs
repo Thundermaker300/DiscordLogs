@@ -173,7 +173,7 @@ namespace DiscordLogs
                 if (ev.InteractionType == SCP_ET.DoorInteractType.Player && ev.Entity != null)
                 {
                     var ply = Player.GetPlayer(ev.Entity);
-                    AddLog($"🚪 {UserDisplay(ply)} has {(ev.IsClose ? "closed" : "opened")} a door. Name: {ev.DoorName} | DoorType: {ev.DoorType}");
+                    AddLog($"🚪 {UserDisplay(ply)} has {(ev.InteractionMethod == SCP_ET.DoorInteractMethod.Close ? "closed" : "opened")} a door. Name: {ev.DoorName} | DoorType: {ev.DoorType}");
                 }
             }
         }
