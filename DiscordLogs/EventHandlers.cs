@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using PluginAPI;
 using PluginAPI.Events.EventArgs;
+using SCP_ET.World.Doors;
 
 namespace DiscordLogs
 {
@@ -170,10 +171,10 @@ namespace DiscordLogs
             if (!ev.Finalized) return;
             if (ev.IsNPCOrPlayer)
             {
-                if (ev.InteractionType == SCP_ET.DoorInteractType.Player && ev.Entity != null)
+                if (ev.InteractionType == DoorInteractType.Player && ev.Entity != null)
                 {
                     var ply = Player.GetPlayer(ev.Entity);
-                    AddLog($"🚪 {UserDisplay(ply)} has {(ev.InteractionMethod == SCP_ET.DoorInteractMethod.Close ? "closed" : "opened")} a door. Name: {ev.DoorName} | DoorType: {ev.DoorType}");
+                    AddLog($"🚪 {UserDisplay(ply)} has {(ev.InteractionMethod == DoorInteractMethod.Close ? "closed" : "opened")} a door. Name: {ev.DoorName} | DoorType: {ev.DoorType}");
                 }
             }
         }
@@ -246,7 +247,7 @@ namespace DiscordLogs
         {
             if (!plugin.Config.OnCleanRoomTrigger) return;
             if (!ev.Finalized) return;
-            if (ev.NewClassID == 0)
+            if (ev.NewClassId == 0)
                 AddLog($"👻 {UserDisplay(ev.Player)} has been changed to Spectator");
             else
                 AddLog($"🧍 {UserDisplay(ev.Player)} has been changed to Class-D");

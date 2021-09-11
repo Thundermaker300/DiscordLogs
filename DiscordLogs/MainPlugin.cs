@@ -13,7 +13,7 @@ namespace DiscordLogs
     {
         public override string Name => "DiscordLogs";
         public override string Author => "Thunder";
-        public override Version Version => new Version(0, 1, 2);
+        public override Version Version => new Version(0, 1, 3);
         public override PluginPriority Priority => PluginPriority.High;
         public override PluginType Type => PluginType.Moderation | PluginType.Utility;
 
@@ -37,7 +37,7 @@ namespace DiscordLogs
             ServerEvents.LockdownToggle += handler.OnLockdownToggle;
             ServerEvents.TeslaTrigger += handler.OnTeslaTriger;
             ServerEvents.CleanRoomToggle += handler.OnCleanRoomToggle;
-            ServerEvents.DoorInteract += handler.OnDoorInteract;
+            ServerEvents.InteractDoor += handler.OnDoorInteract;
             
 
             // ! Player
@@ -72,7 +72,7 @@ namespace DiscordLogs
                 ServerEvents.LockdownToggle -= handler.OnLockdownToggle;
                 ServerEvents.TeslaTrigger -= handler.OnTeslaTriger;
                 ServerEvents.CleanRoomToggle -= handler.OnCleanRoomToggle;
-                ServerEvents.DoorInteract -= handler.OnDoorInteract;
+                ServerEvents.InteractDoor -= handler.OnDoorInteract;
 
                 // ! Player
                 PlayerEvents.PlayerDamage -= handler.OnDamage;
