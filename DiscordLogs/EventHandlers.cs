@@ -10,6 +10,9 @@ using PluginAPI;
 using PluginAPI.Events.EventArgs;
 using SCP_ET.Commands;
 using SCP_ET.World.Doors;
+using UnityEngine.Networking;
+using MEC;
+using UnityEngine;
 
 namespace DiscordLogs
 {
@@ -21,7 +24,7 @@ namespace DiscordLogs
         public EventHandlers(MainPlugin plug)
         {
             plugin = plug;
-            Task.Factory.StartNew(MainLoop);
+            plug.loopHandle = Timing.RunCoroutine(MainLoop(), "DISCORDLOGS_MAINLOOP");
         }
 
         private string UserDisplay(Player ply) => $"{ply.PlayerName} ({ply.SteamId})";
@@ -38,7 +41,7 @@ namespace DiscordLogs
             logs.Enqueue(obj);
         }
 
-        private async void MainLoop()
+        private IEnumerator<float> MainLoop()
         {
             while (true)
             {
@@ -73,45 +76,36 @@ namespace DiscordLogs
                     }
                     if (bldrMain.ToString().Length > 0)
                     {
-                        using (HttpClient clientMain = new HttpClient())
+                        WebhookBody bodyMain = new WebhookBody { username = "EventLog", content = bldrMain.ToString() };
+                        UnityWebRequest resp = UnityWebRequest.Post(plugin.Config.WebhookUrl, JsonConvert.SerializeObject(bodyMain));
+                        Timing.WaitUntilDone(new WaitUntil(() => resp.isDone));
+                        if (resp.result != UnityWebRequest.Result.Success)
                         {
-                            WebhookBody bodyMain = new WebhookBody { username = "EventLog", content = bldrMain.ToString() };
-                            StringContent content = new StringContent(JsonConvert.SerializeObject(bodyMain), Encoding.UTF8, "application/json");
-                            HttpResponseMessage resp = await clientMain.PostAsync(plugin.Config.WebhookUrl, content);
-                            if (!resp.IsSuccessStatusCode)
-                            {
-                                Log.Error($"Failed to send to main webhook: {resp.ReasonPhrase}");
-                            }
+                            Log.Error($"Failed to send to main webhook: {resp.error}");
                         }
                     }
                     if (bldrChat.ToString().Length > 0)
                     {
-                        using (HttpClient clientChat = new HttpClient())
+                        WebhookBody bodyChat = new WebhookBody { username = "ChatLog", content = bldrChat.ToString() };
+                        UnityWebRequest resp = UnityWebRequest.Post(string.IsNullOrEmpty(plugin.Config.ChatWebhookUrl) ? plugin.Config.WebhookUrl : plugin.Config.ChatWebhookUrl, JsonConvert.SerializeObject(bodyChat));
+                        Timing.WaitUntilDone(new WaitUntil(() => resp.isDone));
+                        if (resp.result != UnityWebRequest.Result.Success)
                         {
-                            WebhookBody bodyChat = new WebhookBody { username = "ChatLog", content = bldrChat.ToString() };
-                            StringContent content = new StringContent(JsonConvert.SerializeObject(bodyChat), Encoding.UTF8, "application/json");
-                            HttpResponseMessage resp = await clientChat.PostAsync(string.IsNullOrEmpty(plugin.Config.ChatWebhookUrl) ? plugin.Config.WebhookUrl : plugin.Config.ChatWebhookUrl, content);
-                            if (!resp.IsSuccessStatusCode)
-                            {
-                                Log.Error($"Failed to send to chat webhook: {resp.ReasonPhrase}");
-                            }
+                            Log.Error($"Failed to send to chat webhook: {resp.error}");
                         }
                     }
                     if (bldrAdmin.ToString().Length > 0)
                     {
-                        using (HttpClient clientAdmin = new HttpClient())
+                        WebhookBody bodyAdmin = new WebhookBody { username = "AdminLog", content = bldrAdmin.ToString() };
+                        UnityWebRequest resp = UnityWebRequest.Post(string.IsNullOrEmpty(plugin.Config.AdminWebhookUrl) ? plugin.Config.WebhookUrl : plugin.Config.AdminWebhookUrl, JsonConvert.SerializeObject(bodyAdmin));
+                        Timing.WaitUntilDone(new WaitUntil(() => resp.isDone));
+                        if (resp.result != UnityWebRequest.Result.Success)
                         {
-                            WebhookBody bodyAdmin = new WebhookBody { username = "AdminLog", content = bldrAdmin.ToString() };
-                            StringContent content = new StringContent(JsonConvert.SerializeObject(bodyAdmin), Encoding.UTF8, "application/json");
-                            HttpResponseMessage resp = await clientAdmin.PostAsync(string.IsNullOrEmpty(plugin.Config.AdminWebhookUrl) ? plugin.Config.WebhookUrl : plugin.Config.AdminWebhookUrl, content);
-                            if (!resp.IsSuccessStatusCode)
-                            {
-                                Log.Error($"Failed to send to admin webhook: {resp.ReasonPhrase}");
-                            }
+                            Log.Error($"Failed to send to admin webhook: {resp.error}");
                         }
                     }
                 }
-                await Task.Delay(5000);
+                yield return Timing.WaitForSeconds(5f);
             }
         }
 

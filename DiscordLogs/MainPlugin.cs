@@ -1,4 +1,5 @@
-﻿using PluginAPI;
+﻿using MEC;
+using PluginAPI;
 using PluginAPI.Enums;
 using PluginAPI.Events;
 using System;
@@ -18,6 +19,7 @@ namespace DiscordLogs
         public override PluginType Type => PluginType.Moderation | PluginType.Utility;
 
         EventHandlers handler;
+        internal CoroutineHandle loopHandle;
 
         public override void OnEnabled()
         {
@@ -62,6 +64,10 @@ namespace DiscordLogs
 
         public override void OnDisabled()
         {
+            if (loopHandle != null)
+            {
+                Timing.KillCoroutines(loopHandle);
+            }
             if (handler != null)
             {
                 // Unregister events
