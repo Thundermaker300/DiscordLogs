@@ -78,7 +78,7 @@ namespace DiscordLogs
                     {
                         WebhookBody bodyMain = new WebhookBody { username = "EventLog", content = bldrMain.ToString() };
                         UnityWebRequest resp = UnityWebRequest.Post(plugin.Config.WebhookUrl, JsonConvert.SerializeObject(bodyMain));
-                        Timing.WaitUntilDone(new WaitUntil(() => resp.isDone));
+                        Timing.WaitUntilDone(resp.SendWebRequest());
                         if (resp.result != UnityWebRequest.Result.Success)
                         {
                             Log.Error($"Failed to send to main webhook: {resp.error}");
@@ -88,7 +88,7 @@ namespace DiscordLogs
                     {
                         WebhookBody bodyChat = new WebhookBody { username = "ChatLog", content = bldrChat.ToString() };
                         UnityWebRequest resp = UnityWebRequest.Post(string.IsNullOrEmpty(plugin.Config.ChatWebhookUrl) ? plugin.Config.WebhookUrl : plugin.Config.ChatWebhookUrl, JsonConvert.SerializeObject(bodyChat));
-                        Timing.WaitUntilDone(new WaitUntil(() => resp.isDone));
+                        Timing.WaitUntilDone(resp.SendWebRequest());
                         if (resp.result != UnityWebRequest.Result.Success)
                         {
                             Log.Error($"Failed to send to chat webhook: {resp.error}");
@@ -98,7 +98,7 @@ namespace DiscordLogs
                     {
                         WebhookBody bodyAdmin = new WebhookBody { username = "AdminLog", content = bldrAdmin.ToString() };
                         UnityWebRequest resp = UnityWebRequest.Post(string.IsNullOrEmpty(plugin.Config.AdminWebhookUrl) ? plugin.Config.WebhookUrl : plugin.Config.AdminWebhookUrl, JsonConvert.SerializeObject(bodyAdmin));
-                        Timing.WaitUntilDone(new WaitUntil(() => resp.isDone));
+                        Timing.WaitUntilDone(resp.SendWebRequest());
                         if (resp.result != UnityWebRequest.Result.Success)
                         {
                             Log.Error($"Failed to send to admin webhook: {resp.error}");
