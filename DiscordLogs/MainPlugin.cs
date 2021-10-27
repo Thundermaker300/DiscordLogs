@@ -38,6 +38,7 @@ namespace DiscordLogs
             ServerEvents.TeslaTrigger += handler.OnTeslaTriger;
             ServerEvents.CleanRoomToggle += handler.OnCleanRoomToggle;
             ServerEvents.InteractDoor += handler.OnDoorInteract;
+            ServerEvents.CommandExecute += handler.OnAdminCommand;
             
 
             // ! Player
@@ -47,7 +48,6 @@ namespace DiscordLogs
             PlayerEvents.PlayerLeave += handler.OnLeave;
             PlayerEvents.PlayerChat += handler.OnChat;
             PlayerEvents.PlayerEffect += handler.OnEffect;
-            PlayerEvents.PlayerExecuteCommand += handler.OnAdminCommand;
             PlayerEvents.PlayerClassChange += handler.OnClassChage;
 
             // ! SCP
@@ -73,6 +73,7 @@ namespace DiscordLogs
                 ServerEvents.TeslaTrigger -= handler.OnTeslaTriger;
                 ServerEvents.CleanRoomToggle -= handler.OnCleanRoomToggle;
                 ServerEvents.InteractDoor -= handler.OnDoorInteract;
+                ServerEvents.CommandExecute -= handler.OnAdminCommand;
 
                 // ! Player
                 PlayerEvents.PlayerDamage -= handler.OnDamage;
@@ -81,7 +82,6 @@ namespace DiscordLogs
                 PlayerEvents.PlayerLeave -= handler.OnLeave;
                 PlayerEvents.PlayerChat -= handler.OnChat;
                 PlayerEvents.PlayerEffect -= handler.OnEffect;
-                PlayerEvents.PlayerExecuteCommand -= handler.OnAdminCommand;
                 PlayerEvents.PlayerClassChange -= handler.OnClassChage;
 
                 // ! SCP

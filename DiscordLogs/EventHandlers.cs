@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using PluginAPI;
 using PluginAPI.Events.EventArgs;
+using SCP_ET.Commands;
 using SCP_ET.World.Doors;
 
 namespace DiscordLogs
@@ -236,11 +237,14 @@ namespace DiscordLogs
             AddLog($"{UserDisplay(ev.Player)} has the {ev.Effect.id}");
         }
 
-        public void OnAdminCommand(PlayerExecuteCommandEvent ev)
+        public void OnAdminCommand(CommandExecuteEvent ev)
         {
             if (!plugin.Config.EnableAdminLogs) return;
             if (!ev.Finalized) return;
-            AddLog($"💬 {UserDisplay(ev.Player)} executed {ev.CommandType} `{ev.RawInput}`, success: `{ev.IsSuccessful}`, response: {ev.ResponseMessage}.", false, WebhookType.Admin);
+            if (ev.Invoker is PlayerInvoker plrInv)
+                AddLog($"💬 {UserDisplay(plrInv.Player.GetPlayer())} executed {ev.CommandType} `{ev.RawInput}`, success: `{ev.IsSuccessful}`, response: {ev.ResponseMessage}.", false, WebhookType.Admin);
+            else if (ev.Invoker is ServerInvoker servInv)
+                AddLog($"💬 **SERVER** executed {ev.CommandType} `{ev.RawInput}`, success: `{ev.IsSuccessful}`, response: {ev.ResponseMessage}.", false, WebhookType.Admin);
         }
 
         public void OnClassChage(PlayerClassChangeEvent ev)
