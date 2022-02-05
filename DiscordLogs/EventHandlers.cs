@@ -228,7 +228,7 @@ namespace DiscordLogs
         {
             if (!plugin.Config.OnEffect) return;
             if (!ev.Finalized) return;
-            AddLog($"{UserDisplay(ev.Player)} has the {ev.Effect.id}");
+            AddLog($"{UserDisplay(ev.Player)} has the {ev.Effect.Id}");
         }
 
         public void OnAdminCommand(CommandExecuteEvent ev)
@@ -243,7 +243,7 @@ namespace DiscordLogs
 
         public void OnClassChage(PlayerClassChangeEvent ev)
         {
-            if (!plugin.Config.OnCleanRoomTrigger) return;
+            if (!plugin.Config.OnClassChange) return;
             if (!ev.Finalized) return;
             if (ev.NewClassId == 0)
                 AddLog($"👻 {UserDisplay(ev.Player)} has been changed to Spectator");
@@ -251,7 +251,33 @@ namespace DiscordLogs
                 AddLog($"🧍 {UserDisplay(ev.Player)} has been changed to Class-D");
         }
 
+        public void OnEnterPocketDimension(EnterPocketDimensionEvent ev)
+        {
+            if (!plugin.Config.OnPocketDimension) return;
+            if (!ev.Finalized) return;
+            AddLog($"🕳 {UserDisplay(ev.Player)} has entered the Pocket Dimension.");
+        }
 
+        public void OnExitPocketDimension(ExitPocketDimensionEvent ev)
+        {
+            if (!plugin.Config.OnPocketDimension) return;
+            if (!ev.Finalized) return;
+            AddLog($"🚪 { UserDisplay(ev.Player)} has exited the Pocket Dimension.");
+        }
+
+        public void OnChangePocketDimensionStage(ChangePocketDimensionStageEvent ev)
+        {
+            if (!plugin.Config.OnPocketDimension) return;
+            if (!ev.Finalized) return;
+            AddLog($"🚪 { UserDisplay(ev.Player)} has entered stage {ev.Stage} of the Pocket Dimension.");
+        }
+
+        public void OnInspectBody(PlayerInspectBodyEvent ev)
+        {
+            if (!plugin.Config.OnPlayerInspectBody) return;
+            if (!ev.Finalized) return;
+            AddLog($"⚰️ { UserDisplay(ev.Player)} has inspected the body of {ev.DeadBody.owner} ({(ev.DeadBody.playerOwner != null ? "(Player)" : "(NPC)")}).");
+        }
 
         // SCP
         public void On049Cure(Scp049CureEvent ev)

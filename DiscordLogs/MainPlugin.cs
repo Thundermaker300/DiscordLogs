@@ -51,6 +51,10 @@ namespace DiscordLogs
             PlayerEvents.PlayerChat += handler.OnChat;
             PlayerEvents.PlayerEffect += handler.OnEffect;
             PlayerEvents.PlayerClassChange += handler.OnClassChage;
+            PlayerEvents.EnterPocketDimension += handler.OnEnterPocketDimension;
+            PlayerEvents.ExitPocketDimension += handler.OnExitPocketDimension;
+            PlayerEvents.ChangePocketDimensionStage += handler.OnChangePocketDimensionStage;
+            PlayerEvents.PlayerInspectBody += handler.OnInspectBody;
 
             // ! SCP
             ScpEvents.Scp049AddTarget += handler.On049AddTarget;
@@ -89,6 +93,10 @@ namespace DiscordLogs
                 PlayerEvents.PlayerChat -= handler.OnChat;
                 PlayerEvents.PlayerEffect -= handler.OnEffect;
                 PlayerEvents.PlayerClassChange -= handler.OnClassChage;
+                PlayerEvents.EnterPocketDimension -= handler.OnEnterPocketDimension;
+                PlayerEvents.ExitPocketDimension -= handler.OnExitPocketDimension;
+                PlayerEvents.ChangePocketDimensionStage -= handler.OnChangePocketDimensionStage;
+                PlayerEvents.PlayerInspectBody -= handler.OnInspectBody;
 
                 // ! SCP
                 ScpEvents.Scp049AddTarget -= handler.On049AddTarget;
