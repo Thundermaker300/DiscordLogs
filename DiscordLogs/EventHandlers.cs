@@ -157,7 +157,7 @@ namespace DiscordLogs
             if (ev.IsDisabling == true)
                 AddLog($"🚨 {UserDisplay(ev.Player)} has disabled Clean Room #{ev.Controller.curCleanRoomId}");
             else
-                AddLog($"🚨 {UserDisplay(ev.Player)} has enabled Clean Room #{ev.Controller.curCleanRoomId}"); 
+                AddLog($"🚨 {UserDisplay(ev.Player)} has enabled Clean Room #{ev.Controller.curCleanRoomId}");
         }
 
         public void OnDoorInteract(InteractDoorEvent ev)
@@ -304,6 +304,13 @@ namespace DiscordLogs
                 AddLog($"🥤 {UserDisplay(ev.Player)} has requested a drink `{ev.Input}`. Is it valid {ev.IsValidDrink}");
             else
                 AddLog($"🥤 {UserDisplay(ev.Player)} has requested a custom drink with the name of `{ev.Input}`");
+        }
+
+        public void On330Interact(Scp330InteractEvent ev)
+        {
+            if (!plugin.Config.On330PickupCandy) return;
+            if (!ev.Finalized) return;
+            AddLog($"🍬 {UserDisplay(ev.Player)} picked up a candy from SCP-330{(ev.IsRemovingHands ? " **and lost their hands!**" : ".")}");
         }
 
         public void On914Activate(Scp914ActivateEvent ev)

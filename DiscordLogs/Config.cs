@@ -30,10 +30,11 @@ namespace DiscordLogs
         public bool OnCleanRoomToggle { get; set; } = true;
         public bool OnPocketDimension { get; set; } = true;
         public bool OnPlayerInspectBody { get; set; } = true;
-        public bool On294Input { get; set; } = true;
-        public bool On914Activate { get; set; } = true;
         public bool OnDoorInteract { get; set; } = false;
         public bool On049AddTarget { get; set; } = false;
         public bool On049Cure { get; set; } = false;
+        public bool On294Input { get; set; } = true;
+        public bool On330PickupCandy { get; set; } = true;
+        public bool On914Activate { get; set; } = true;
     }
 }
