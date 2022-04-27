@@ -128,10 +128,10 @@ namespace DiscordLogs
         {
             if (!plugin.Config.OnCleanRoomTrigger) return;
             if (!ev.Finalized) return;
-            Player ply = Player.GetPlayer(ev.Entity);
+            Player ply = Player.GetPlayer(ev.Entity.GameObject);
             if (ply != null)
             {
-                AddLog($"⛆ {UserDisplay(ply)} has triggered Clean Room #{ev.CleanRoom.curCleanRoomId}.");
+                AddLog($"⛆ {UserDisplay(ply)} has triggered Clean Room #{ev.Controller.curCleanRoomId}.");
             }
         }
 
@@ -155,9 +155,9 @@ namespace DiscordLogs
             if (!plugin.Config.OnCleanRoomTrigger) return;
             if (!ev.Finalized) return;
             if (ev.IsDisabling == true)
-                AddLog($"🚨 {UserDisplay(ev.Player)} has disabled Clean Room #{ev.CleanRoom.curCleanRoomId}");
+                AddLog($"🚨 {UserDisplay(ev.Player)} has disabled Clean Room #{ev.Controller.curCleanRoomId}");
             else
-                AddLog($"🚨 {UserDisplay(ev.Player)} has enabled Clean Room #{ev.CleanRoom.curCleanRoomId}"); 
+                AddLog($"🚨 {UserDisplay(ev.Player)} has enabled Clean Room #{ev.Controller.curCleanRoomId}"); 
         }
 
         public void OnDoorInteract(InteractDoorEvent ev)
@@ -168,7 +168,7 @@ namespace DiscordLogs
             {
                 if (ev.InteractionType == DoorInteractType.Player && ev.Entity != null)
                 {
-                    var ply = Player.GetPlayer(ev.Entity);
+                    var ply = Player.GetPlayer(ev.Entity.GameObject);
                     AddLog($"🚪 {UserDisplay(ply)} has {(ev.InteractionMethod == DoorInteractMethod.Close ? "closed" : "opened")} a door. Name: {ev.DoorName} | DoorType: {ev.DoorType}");
                 }
             }
@@ -179,7 +179,7 @@ namespace DiscordLogs
         {
             if (!plugin.Config.OnTeslaTrigger) return;
             if (!ev.Finalized) return;
-            Player ply = Player.GetPlayer(ev.Entity);
+            Player ply = Player.GetPlayer(ev.Entity.GameObject);
             if (ply != null)
                 AddLog($"⚡ {UserDisplay(ply)} has triggered a tesla gate.");
         }
@@ -291,7 +291,7 @@ namespace DiscordLogs
         {
             if (!plugin.Config.On049AddTarget) return;
             if (!ev.Finalized) return;
-            Player ply = Player.GetPlayer(ev.Target);
+            Player ply = Player.GetPlayer(ev.Target.GameObject);
             if (ply != null)
                 AddLog($"🏃‍ {UserDisplay(ply)} is now a target of SCP-049.");
         }
