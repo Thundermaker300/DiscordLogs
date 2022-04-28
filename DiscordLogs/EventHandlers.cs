@@ -77,31 +77,37 @@ namespace DiscordLogs
                     if (bldrMain.ToString().Length > 0)
                     {
                         WebhookBody bodyMain = new WebhookBody { username = "EventLog", content = bldrMain.ToString() };
-                        UnityWebRequest resp = UnityWebRequest.Post(plugin.Config.WebhookUrl, JsonConvert.SerializeObject(bodyMain));
-                        Timing.WaitUntilDone(resp.SendWebRequest());
+                        UnityWebRequest resp = UnityWebRequest.Put(plugin.Config.WebhookUrl, JsonConvert.SerializeObject(bodyMain));
+                        resp.method = "POST";
+                        resp.SetRequestHeader("Content-Type", "application/json");
+                        yield return Timing.WaitUntilDone(resp.SendWebRequest());
                         if (resp.result != UnityWebRequest.Result.Success)
                         {
-                            Log.Error($"Failed to send to main webhook: {resp.error}");
+                            Log.Error($"Failed to send to main webhook (ERROR {resp.responseCode}): {resp.downloadHandler.text}");
                         }
                     }
                     if (bldrChat.ToString().Length > 0)
                     {
                         WebhookBody bodyChat = new WebhookBody { username = "ChatLog", content = bldrChat.ToString() };
-                        UnityWebRequest resp = UnityWebRequest.Post(string.IsNullOrEmpty(plugin.Config.ChatWebhookUrl) ? plugin.Config.WebhookUrl : plugin.Config.ChatWebhookUrl, JsonConvert.SerializeObject(bodyChat));
-                        Timing.WaitUntilDone(resp.SendWebRequest());
+                        UnityWebRequest resp = UnityWebRequest.Put(string.IsNullOrEmpty(plugin.Config.ChatWebhookUrl) ? plugin.Config.WebhookUrl : plugin.Config.ChatWebhookUrl, JsonConvert.SerializeObject(bodyChat));
+                        resp.method = "POST";
+                        resp.SetRequestHeader("Content-Type", "application/json");
+                        yield return Timing.WaitUntilDone(resp.SendWebRequest());
                         if (resp.result != UnityWebRequest.Result.Success)
                         {
-                            Log.Error($"Failed to send to chat webhook: {resp.error}");
+                            Log.Error($"Failed to send to chat webhook (ERROR {resp.responseCode}): {resp.downloadHandler.text}");
                         }
                     }
                     if (bldrAdmin.ToString().Length > 0)
                     {
                         WebhookBody bodyAdmin = new WebhookBody { username = "AdminLog", content = bldrAdmin.ToString() };
-                        UnityWebRequest resp = UnityWebRequest.Post(string.IsNullOrEmpty(plugin.Config.AdminWebhookUrl) ? plugin.Config.WebhookUrl : plugin.Config.AdminWebhookUrl, JsonConvert.SerializeObject(bodyAdmin));
-                        Timing.WaitUntilDone(resp.SendWebRequest());
+                        UnityWebRequest resp = UnityWebRequest.Put(string.IsNullOrEmpty(plugin.Config.AdminWebhookUrl) ? plugin.Config.WebhookUrl : plugin.Config.AdminWebhookUrl, JsonConvert.SerializeObject(bodyAdmin));
+                        resp.method = "POST";
+                        resp.SetRequestHeader("Content-Type", "application/json");
+                        yield return Timing.WaitUntilDone(resp.SendWebRequest());
                         if (resp.result != UnityWebRequest.Result.Success)
                         {
-                            Log.Error($"Failed to send to admin webhook: {resp.error}");
+                            Log.Error($"Failed to send to admin webhook (ERROR {resp.responseCode}): {resp.downloadHandler.text}");
                         }
                     }
                 }
@@ -114,7 +120,7 @@ namespace DiscordLogs
         public void OnReady()
         {
             if (!plugin.Config.OnReady) return;
-            AddLog($"✅ Server is ready and waiting for players!");
+            AddLog($"✅ Server is ready and waiting for players! Version `{Application.version}`");
         }
 
         public void OnActivateFemur(ActivateFemurBreakerEvent ev)
