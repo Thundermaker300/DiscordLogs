@@ -37,7 +37,7 @@ namespace DiscordLogs
             {
                 return $"{ply.PlayerName} ({ply.SteamId})";
             }
-        };
+        }
 
 
         private void AddLog(string log, bool isImportant = false, WebhookType web = WebhookType.Main)
