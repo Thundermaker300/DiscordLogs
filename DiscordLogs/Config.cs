@@ -10,9 +10,11 @@ namespace DiscordLogs
     public class Config : IConfig
     {
         public bool IsEnabled { get; set; } = true;
+        public bool ShowSensitive { get; set; } = false;
         public string WebhookUrl { get; set; } = string.Empty;
         public string ChatWebhookUrl { get; set; } = string.Empty;
         public string AdminWebhookUrl { get; set; } = string.Empty;
+        public bool BlockDamageSpam { get; set; } = false;
         public bool EnableAdminLogs { get; set; } = true;
         public bool EnableChatLogs { get; set; } = true;
         public bool LogAdminChat { get; set; } = true;

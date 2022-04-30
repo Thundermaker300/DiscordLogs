@@ -27,7 +27,17 @@ namespace DiscordLogs
             plug.loopHandle = Timing.RunCoroutine(MainLoop(), "DISCORDLOGS_MAINLOOP");
         }
 
-        private string UserDisplay(Player ply) => $"{ply.PlayerName} ({ply.SteamId})";
+        private string UserDisplay(Player ply, bool showSensitive = false)
+        {
+            if (showSensitive && plugin.Config.ShowSensitive)
+            {
+                return $"{ply.PlayerName} ({ply.SteamId}) ||[${ply.PlayerMain.Ip}]||";
+            }
+            else
+            {
+                return $"{ply.PlayerName} ({ply.SteamId})";
+            }
+        };
 
 
         private void AddLog(string log, bool isImportant = false, WebhookType web = WebhookType.Main)
@@ -194,19 +204,20 @@ namespace DiscordLogs
         public void OnJoin(PlayerJoinEvent ev)
         {
             if (!plugin.Config.OnJoin) return;
-            AddLog($"➡️ {UserDisplay(ev.Player)} has joined the server.", true);
+            AddLog($"➡️ {UserDisplay(ev.Player, true)} has joined the server.", true);
         }
 
         public void OnLeave(PlayerLeaveEvent ev)
         {
             if (!plugin.Config.OnLeave) return;
-            AddLog($"⬅️ {UserDisplay(ev.Player)} has left the server.", true);
+            AddLog($"⬅️ {UserDisplay(ev.Player, true)} has left the server.", true);
         }
 
         public void OnDamage(PlayerDamageEvent ev)
         {
             if (!plugin.Config.OnDamage) return;
             if (!ev.Finalized) return;
+            if (plugin.Config.BlockDamageSpam && (ev.AttackerId == "GAS" || ev.AttackerId == "POCKET" || ev.AttackerId == "SCP106")) return;
             if (ev.AttackerId == "Player")
                 AddLog($"🩸 {UserDisplay(ev.Player)} has taken {ev.Damage.ToString("F")} damage from user {UserDisplay(Player.GetPlayer(ev.Attacker))}", true);
             else
