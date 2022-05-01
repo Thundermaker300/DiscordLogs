@@ -14,7 +14,7 @@ namespace DiscordLogs
     {
         public override string Name => "DiscordLogs";
         public override string Author => "Thunder";
-        public override Version Version => new Version(0, 2, 2);
+        public override Version Version => new Version(0, 2, 3);
         public override PluginPriority Priority => PluginPriority.High;
         public override PluginType Type => PluginType.Moderation | PluginType.Utility;
 
@@ -33,6 +33,7 @@ namespace DiscordLogs
             handler = new EventHandlers(this);
 
             // ! Server
+            ServerEvents.Booting += handler.OnBooting;
             ServerEvents.Ready += handler.OnReady;
             ServerEvents.ActivateFemurBreaker += handler.OnActivateFemur;
             ServerEvents.CleanRoomTrigger += handler.OnCleanRoomTrigger;
@@ -77,6 +78,7 @@ namespace DiscordLogs
             {
                 // Unregister events
                 // ! Server
+                ServerEvents.Booting -= handler.OnBooting;
                 ServerEvents.Ready -= handler.OnReady;
                 ServerEvents.ActivateFemurBreaker -= handler.OnActivateFemur;
                 ServerEvents.CleanRoomTrigger -= handler.OnCleanRoomTrigger;

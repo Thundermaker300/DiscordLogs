@@ -127,10 +127,16 @@ namespace DiscordLogs
 
         // <---- EVENTS ---->
         // Server
+
+        public void OnBooting()
+        {
+            AddLog($"Server is booting up. Version `{Application.version}`.");
+        }
+
         public void OnReady()
         {
             if (!plugin.Config.OnReady) return;
-            AddLog($"✅ Server is ready and waiting for players! Version `{Application.version}`");
+            AddLog($"✅ Server is ready and waiting for players!");
         }
 
         public void OnActivateFemur(ActivateFemurBreakerEvent ev)
@@ -195,7 +201,7 @@ namespace DiscordLogs
         {
             if (!plugin.Config.OnTeslaTrigger) return;
             if (!ev.Finalized) return;
-            Player ply = Player.GetPlayer(ev.Entity.GameObject);
+            Player ply = Player.GetPlayer(ev.Entity);
             if (ply != null)
                 AddLog($"⚡ {UserDisplay(ply)} has triggered a tesla gate.");
         }
@@ -217,7 +223,7 @@ namespace DiscordLogs
         {
             if (!plugin.Config.OnDamage) return;
             if (!ev.Finalized) return;
-            if (plugin.Config.BlockDamageSpam && (ev.AttackerId == "GAS" || ev.AttackerId == "POCKET" || ev.AttackerId == "SCP106")) return;
+            if (plugin.Config.BlockDamageSpam && (ev.AttackerId == "GAS" || ev.AttackerId == "POCKET" || ev.AttackerId == "SCP330")) return;
             if (ev.AttackerId == "Player")
                 AddLog($"🩸 {UserDisplay(ev.Player)} has taken {ev.Damage.ToString("F")} damage from user {UserDisplay(Player.GetPlayer(ev.Attacker))}", true);
             else
